@@ -55,7 +55,7 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
 
     const handleDelete = async (id) => {
         await axios
-            .delete('http://localhost:3000/' + id)
+            .delete('http://localhost:8800/' + id)
             .then(({ data }) => {
                 const newArray = tarefas.filter((tarefa) => tarefa.id !== id);
 

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import React, { useRef } from 'react';
-import { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -84,6 +83,12 @@ const Form = ({ getTarefas, onEdit, setOnEdit }) => {
             return toast.warn('Preencha todos os campos!')
         }
 
+        // Validação do formato HH:mm:ss
+        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+            if (!regex.test(tarefa.tempo_estimado.value)) {
+                return toast.warn('Formato de tempo inválido. Use HH:mm:ss');
+        }
+
         if (onEdit){
             await axios
                 .put('http://localhost:8800/' + onEdit.id, {
@@ -137,8 +142,13 @@ const Form = ({ getTarefas, onEdit, setOnEdit }) => {
             </InputArea>
 
             <InputArea>
-                <Label>Tempo Estimado:</Label>
-                <Input type="time" id="tempo_estimado" name="tempo_estimado" />
+            <Label>Tempo Estimado:</Label>
+            <Input
+            type="text"
+            id="tempo_estimado"
+            name="tempo_estimado"
+            placeholder="HH:MM:SS"
+            />
             </InputArea>
 
             <Button type="submit">SALVAR</Button>

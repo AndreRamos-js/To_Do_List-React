@@ -24,12 +24,12 @@ const Title = styled.h2``;
 
 function App() {
 	const [tarefas, setTarefas] = useState([]);
-	const [onEdit, setOneEdit] = useState(null);
+	const [onEdit, setOnEdit] = useState(null);
 
 	const getTarefas = async () => {
 		try {
 			const res = await axios.get('http://localhost:8800/');
-				setTarefas(res.data.sort((a, b) => (a.titulo > b.titulo ? 1 : -1)));
+				setTarefas(res.data);
 		} catch (error) {
 			toast.error(error);
 		}
@@ -42,9 +42,9 @@ function App() {
   return (
     <>
       <Container>
-				<Title>TAREFAS</Title>
-				<Form onEdit={onEdit} setOneEdit={setOneEdit} getTarefas={getTarefas} />
-				<Grid tarefas={tarefas} setTarefas={setTarefas} setOneEdit={setOneEdit} />
+				<Title>GERENCIADOR DE TAREFAS</Title>
+				<Form onEdit={onEdit} setOnEdit={setOnEdit} getTarefas={getTarefas} />
+				<Grid tarefas={tarefas} setTarefas={setTarefas} setOnEdit={setOnEdit} />
       </Container>
       <ToastContainer autoClose={3000} position={toast.POSITION.BOTTOM_LEFT} />
       <GlobalStyle />

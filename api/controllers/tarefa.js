@@ -52,8 +52,7 @@ export const updateTarefa = (req, res) => {
 
 
 export const deleteTarefa = (req, res) => {
-    const q = 
-        'DELETE FROM tarefas WHERE `id` = ?';
+    const q = 'DELETE FROM tarefas WHERE `id` = ?';
 
     db.query(q, [req.params.id], (err) => {
         if (err) return res.json(err);
