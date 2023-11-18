@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import React, { useRef } from 'react';
-
+import { useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const FormContainer = styled.form`
@@ -53,11 +55,68 @@ const Button = styled.button`
 `;
 
 
-const Form = ({ onEdit }) => {
+const Form = ({ getTarefas, onEdit, setOnEdit }) => {
     const ref = useRef();
 
+
+    useEffect(() =>{
+        if (onEdit){
+            const tarefa = ref.current;
+
+            tarefa.titulo.value = onEdit.titulo;
+            tarefa.descricao.value = onEdit.descricao;
+            tarefa.status.value = onEdit.status;
+            tarefa.tempo_estimado.value = onEdit.tempo_estimado;
+        }
+    }, [onEdit]);
+
+    const hadleSubmit = async (e) => {
+        e.preventDefault();
+
+        const tarefa = ref.current;
+
+        if(
+            !tarefa.titulo.value ||
+            !tarefa.descricao.value ||
+            !tarefa.status.value ||
+            !tarefa.tempo_estimado.value
+        ){
+            return toast.warn('Preencha todos os campos!')
+        }
+
+        if (onEdit){
+            await axios
+                .put('http://localhost:8800/' + onEdit.id, {
+                    titulo: tarefa.titulo.value,
+                    descricao: tarefa.descricao.value,
+                    status: tarefa.status.value,
+                    tempo_estimado: tarefa.tempo_estimado.value,
+                })
+                .then(({ data }) => toast.success(data))
+                .catch(({ data }) => toast.error(data));
+        } else {
+            await axios
+                .post('http://localhost:8800/', {
+                    titulo: tarefa.titulo.value,
+                    descricao: tarefa.descricao.value,
+                    status: tarefa.status.value,
+                    tempo_estimado: tarefa.tempo_estimado.value,
+                })
+                .then(({ data }) => toast.success(data))
+                .catch(({ data }) => toast.error(data));
+        }
+
+        tarefa.titulo.value = '';
+        tarefa.descricao.value = '';
+        tarefa.status.value = '';
+        tarefa.tempo_estimado.value = '';
+
+        setOnEdit(null);
+        getTarefas();
+    };
+
     return (
-        <FormContainer ref={ref}>
+        <FormContainer ref={ref} onSubmit={hadleSubmit}>
             <InputArea>
                 <Label>Título:</Label>
                 <Input type="text" id="titulo" name="titulo" />

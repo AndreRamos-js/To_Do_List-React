@@ -2,7 +2,7 @@ import { db } from '../db.js';
 
 
 
-export const getUsers = (_, res) => {
+export const getTarefas = (_, res) => {
     const q = "SELECT * FROM tarefas";
 
     db.query(q, (err, data) => {
@@ -13,7 +13,7 @@ export const getUsers = (_, res) => {
 };
 
 
-export const addUser = (req, res) => {
+export const addTarefa = (req, res) => {
     const q = 
         'INSERT INTO tarefas(`titulo`, `descricao`, `status`, `tempo_estimado`) VALUES(?)';
 
@@ -32,9 +32,9 @@ export const addUser = (req, res) => {
 };
 
 
-export const updateUser = (req, res) => {
+export const updateTarefa = (req, res) => {
     const q = 
-        'UPDATE tarefas(`titulo`, `descricao`, `status`, `tempo_estimado`) VALUES(?)';
+        'UPDATE tarefas SET `titulo` = ?, `descricao` = ?, `status` = ?, `tempo_estimado` = ? WHERE `id` = ?';
 
     const values = [
         req.body.titulo,
@@ -43,9 +43,21 @@ export const updateUser = (req, res) => {
         req.body.tempo_estimado,
     ]
 
-    db.query(q, [values], (err) => {
+    db.query(q, [...values, req.params.id], (err) => {
         if (err) return res.json(err);
 
-        return res.status(200).json('Tarefa adicionada com sucesso!')
+        return res.status(200).json('Tarefa atualizada com sucesso!')
+    })
+};
+
+
+export const deleteTarefa = (req, res) => {
+    const q = 
+        'DELETE FROM tarefas WHERE `id` = ?';
+
+    db.query(q, [req.params.id], (err) => {
+        if (err) return res.json(err);
+
+        return res.status(200).json('Tarefa excluida com sucesso!')
     })
 };

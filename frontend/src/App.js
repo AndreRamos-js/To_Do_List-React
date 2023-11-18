@@ -23,28 +23,28 @@ const Container = styled.div`
 const Title = styled.h2``;
 
 function App() {
-	const [users, setUsers] = useState([]);
+	const [tarefas, setTarefas] = useState([]);
 	const [onEdit, setOneEdit] = useState(null);
 
-	const getUsers = async () => {
+	const getTarefas = async () => {
 		try {
 			const res = await axios.get('http://localhost:8800/');
-			setUsers(res.data.sort((a, b) => (a.titulo > b.titulo ? 1 : -1)));
+				setTarefas(res.data.sort((a, b) => (a.titulo > b.titulo ? 1 : -1)));
 		} catch (error) {
 			toast.error(error);
 		}
 	}
 
 	useEffect(() => {
-		getUsers();
-	}, [setUsers]);
+		getTarefas();
+	}, [setTarefas]);
 
   return (
     <>
       <Container>
 				<Title>TAREFAS</Title>
-				<Form />
-				<Grid users={users} />
+				<Form onEdit={onEdit} setOneEdit={setOneEdit} getTarefas={getTarefas} />
+				<Grid tarefas={tarefas} setTarefas={setTarefas} setOneEdit={setOneEdit} />
       </Container>
       <ToastContainer autoClose={3000} position={toast.POSITION.BOTTOM_LEFT} />
       <GlobalStyle />
