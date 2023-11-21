@@ -40,7 +40,7 @@ function App() {
 
 	const getTarefas = async () => {
 		try {
-			const res = await axios.get('https://to-do-list-theta-indol.vercel.app/');
+			const res = await axios.get('http://localhost:8800/');
 			setTarefas(res.data);
 
 			// Calcular o total de horas estimadas

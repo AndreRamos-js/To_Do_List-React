@@ -4,7 +4,6 @@ import tarefasRoutes from "./routes/tarefas.js";
 const app = express();
 const port = process.env.PORT || 8800;
 
-
 app.use(express.json());
 
 app.use("/", tarefasRoutes);
