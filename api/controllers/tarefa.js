@@ -60,3 +60,12 @@ export const deleteTarefa = (req, res) => {
         return res.status(200).json('Tarefa excluida com sucesso!')
     })
 };
+
+export const concluirTarefa = (req, res) => {
+    const q = 'UPDATE tarefas SET status = "Concluída" WHERE id = ?';
+  
+    db.query(q, [req.params.id], (err) => {
+      if (err) return res.status(500).json('Erro ao concluir a tarefa.');
+      return res.status(200).json('Tarefa concluída com sucesso!');
+    });
+};

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit, FaCheck } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 
@@ -111,6 +111,19 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
         setOnEdit(null);
     };
 
+    const handleConcluir = async (id) => {
+        try {
+          await axios.put(`http://localhost:8800/concluir/${id}`);
+          const updatedTarefas = tarefas.map((tarefa) =>
+            tarefa.id === id ? { ...tarefa, status: "Concluída" } : tarefa
+          );
+          setTarefas(updatedTarefas);
+          toast.success("Tarefa concluída com sucesso!");
+        } catch (error) {
+          toast.error("Erro ao concluir a tarefa.");
+        }
+    };
+
     return (
         <Table>
             <Thead>
@@ -132,6 +145,9 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
                             <StatusButton status={item.status}>{item.status}</StatusButton>
                         </Td>
                         <Td width='20%'>{item.tempo_estimado}</Td>
+                        <Td alignCenter width="5%">
+                            <FaCheck onClick={() => handleConcluir(item.id)} />
+                        </Td>
                         <Td alignCenter width="5%">
                             <FaEdit onClick={() => handleEdit(item)}/>
                         </Td>
