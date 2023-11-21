@@ -15,6 +15,11 @@
 - **Banco de Dados MySQL:**
   - [MySQL](https://www.mysql.com/) para armazenamento de dados.
 
+
+- **Conteinerização:**
+  - [Docker](https://www.docker.com/) para conteinerizar o frontend e o backend.
+
+
 ## Licença
 
 Este projeto está sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.

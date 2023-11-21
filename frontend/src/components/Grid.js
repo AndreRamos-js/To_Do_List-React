@@ -93,11 +93,6 @@ const StatusButton = styled.button`
 
 const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
 
-    const handleEdit = (item) => {
-        setOnEdit(item);
-    };
-
-
     const handleDelete = async (id) => {
         await axios
             .delete('http://localhost:8800/' + id)
@@ -149,7 +144,7 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
                             <FaCheck onClick={() => handleConcluir(item.id)} />
                         </Td>
                         <Td alignCenter width="5%">
-                            <FaEdit onClick={() => handleEdit(item)}/>
+                          <FaEdit onClick={() => setOnEdit(item)} />
                         </Td>
                         <Td alignCenter width="5%">
                             <FaTrash onClick={() => handleDelete(item.id)} />
