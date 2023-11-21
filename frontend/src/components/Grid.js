@@ -45,6 +45,51 @@ export const Td = styled.td`
     };
 `;
 
+const StatusButton = styled.button`
+  position: relative;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  ${(props) =>
+    props.status === "Pendente" &&
+    `
+    &::before {
+      background-color: gray;
+    }
+  `}
+
+  ${(props) =>
+    props.status === "Em andamento" &&
+    `
+    &::before {
+      background-color: yellow;
+    }
+  `}
+
+  ${(props) =>
+    props.status === "Concluída" &&
+    `
+    &::before {
+      background-color: green;
+    }
+  `}
+`;
+
+
 
 const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
 
@@ -83,7 +128,9 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
                     <Tr key={i}>
                         <Td width='20%'>{item.titulo}</Td>
                         <Td width='20%'>{item.descricao}</Td>
-                        <Td width='20%'>{item.status}</Td>
+                        <Td width="20%">
+                            <StatusButton status={item.status}>{item.status}</StatusButton>
+                        </Td>
                         <Td width='20%'>{item.tempo_estimado}</Td>
                         <Td alignCenter width="5%">
                             <FaEdit onClick={() => handleEdit(item)}/>
