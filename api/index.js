@@ -7,7 +7,7 @@ const port = process.env.PORT || 8800;
 
 // Configuração do middleware CORS
 const corsOptions = {
-  origin: 'to-do-list-5r88.vercel.app', // Substitua isso com o domínio do seu frontend
+  origin: 'to-do-list-5r88.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
