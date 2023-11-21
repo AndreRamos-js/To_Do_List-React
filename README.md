@@ -2,7 +2,7 @@
 To-Do List App
 Descrição Breve: Este projeto é uma aplicação de lista de tarefas (To-Do List). A aplicação permite que os usuários criem, editem e excluam tarefas.
 
-![image](https://github.com/AndreRamos-py/To_Do_List/assets/83097746/590b09e0-c875-4cb5-ae1a-63d40f4b9b6a)
+![image](https://github.com/AndreRamos-py/To_Do_List/assets/83097746/c5e6e1b5-175e-4809-b7c5-d70a42e9b3e2)
 
 
 ## Tecnologias Utilizadas
