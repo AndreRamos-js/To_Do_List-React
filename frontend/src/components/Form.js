@@ -89,6 +89,57 @@ const Form = ({ getTarefas, onEdit, setOnEdit }) => {
         }
       }, [onEdit]);
 
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const tarefa = ref.current;
+
+        if(
+            !tarefa.titulo.value ||
+            !tarefa.descricao.value ||
+            !tarefa.status.value ||
+            !tarefa.tempo_estimado.value
+        ){
+            return toast.warn('Preencha todos os campos!')
+        }
+
+        // Validação do formato HH:mm:ss
+        const regex = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+            if (!regex.test(tarefa.tempo_estimado.value)) {
+                return toast.warn('Formato de tempo inválido. Use HH:mm:ss');
+        }
+
+        if (onEdit){
+            await axios
+                .put('http://localhost:8800/' + onEdit.id, {
+                    titulo: tarefa.titulo.value,
+                    descricao: tarefa.descricao.value,
+                    status: tarefa.status.value,
+                    tempo_estimado: tarefa.tempo_estimado.value,
+                })
+                .then(({ data }) => toast.success(data))
+                .catch(({ data }) => toast.error(data));
+        } else {
+            await axios
+                .post('http://localhost:8800/', {
+                    titulo: tarefa.titulo.value,
+                    descricao: tarefa.descricao.value,
+                    status: tarefa.status.value,
+                    tempo_estimado: tarefa.tempo_estimado.value,
+                })
+                .then(({ data }) => toast.success(data))
+                .catch(({ data }) => toast.error(data));
+        }
+
+        tarefa.titulo.value = '';
+        tarefa.descricao.value = '';
+        tarefa.status.value = '';
+        tarefa.tempo_estimado.value = '';
+
+        setOnEdit(null);
+        getTarefas();
+    };
+
       const closeModal = () => {
         setModalIsOpen(false);
         setEditedTarefa({
@@ -180,7 +231,7 @@ const Form = ({ getTarefas, onEdit, setOnEdit }) => {
                 }}
                 onClick={closeModal}>Fechar</button>
         </Modal>
-        <FormContainer ref={ref}>
+        <FormContainer ref={ref} onSubmit={handleSubmit}>
             <InputArea>
                 <Label>Título:</Label>
                 <Input type="text" id="titulo" name="titulo" />
