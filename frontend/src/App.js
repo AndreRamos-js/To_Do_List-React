@@ -33,6 +33,10 @@ const Title = styled.h2`
 	color: #fff;
 `;
 
+const SubTitle = styled.h3`
+	color: #fff;
+`;
+
 function App() {
 	const [tarefas, setTarefas] = useState([]);
 	const [onEdit, setOnEdit] = useState(null);
@@ -76,7 +80,10 @@ function App() {
 		<>
 			<Container>
 				<Title>GERENCIADOR DE TAREFAS</Title>
+				<br/>
+				<SubTitle>Adicione suas tarefas:</SubTitle>
 				<Form onEdit={onEdit} setOnEdit={setOnEdit} getTarefas={getTarefas} />
+				<br/>
 				<Grid tarefas={tarefas} setTarefas={setTarefas} setOnEdit={setOnEdit} />
 				<Div>
 					Total de horas estimadas para concluir todas as tarefas: {formatarTempo(totalHorasEstimadas)}
