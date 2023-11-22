@@ -1,5 +1,5 @@
 import express from 'express';
-import { getTarefas, addTarefa, updateTarefa, deleteTarefa, concluirTarefa } from '../controllers/tarefa.js';
+import { getTarefas, addTarefa, updateTarefa, deleteTarefa, concluirTarefa, iniciarTarefa } from '../controllers/tarefa.js';
 
 const router = express.Router();
 
@@ -12,5 +12,7 @@ router.put("/:id", updateTarefa);
 router.delete("/:id", deleteTarefa);
 
 router.put("/concluir/:id", concluirTarefa);
+
+router.put("/iniciar/:id", iniciarTarefa);
 
 export default router;

@@ -69,3 +69,12 @@ export const concluirTarefa = (req, res) => {
       return res.status(200).json('Tarefa concluída com sucesso!');
     });
 };
+
+export const iniciarTarefa = (req, res) => {
+    const q = 'UPDATE tarefas SET status = "Em andamento" WHERE id = ?';
+  
+    db.query(q, [req.params.id], (err) => {
+      if (err) return res.status(500).json('Erro ao iniciar a tarefa.');
+      return res.status(200).json('Tarefa iniciada com sucesso!');
+    });
+};

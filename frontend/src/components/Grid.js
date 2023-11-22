@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { FaTrash, FaEdit, FaCheck } from "react-icons/fa";
+import { FaTrashAlt, FaRegCheckSquare } from "react-icons/fa";
+import { FaRegCirclePlay } from "react-icons/fa6";
+import { FiEdit } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 
@@ -119,14 +121,29 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
         }
     };
 
+    const handleIniciar = async (id) => {
+        try {
+          await axios.put(`http://localhost:8800/iniciar/${id}`);
+          const updatedTarefas = tarefas.map((tarefa) =>
+            tarefa.id === id ? { ...tarefa, status: "Em andamento" } : tarefa
+          );
+          setTarefas(updatedTarefas);
+          toast.success("Tarefa iniciada com sucesso!");
+        } catch (error) {
+          toast.error("Erro ao iniciar a tarefa.");
+        }
+    };
+
     return (
         <Table>
             <Thead>
                 <Tr>
+                    <Th></Th>
                     <Th>Título</Th>
                     <Th>Descrição</Th>
                     <Th>Status</Th>
                     <Th>Tempo Estimado</Th>
+                    <Th></Th>
                     <Th></Th>
                     <Th></Th>
                 </Tr>
@@ -134,6 +151,9 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
             <Tbody>
                 {tarefas.map((item, i) => (
                     <Tr key={i}>
+                        <Td alignCenter width="5%">
+                            <FaRegCirclePlay  onClick={() => handleIniciar(item.id)} />
+                        </Td>
                         <Td width='20%'>{item.titulo}</Td>
                         <Td width='20%'>{item.descricao}</Td>
                         <Td width="20%">
@@ -141,13 +161,13 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
                         </Td>
                         <Td width='20%'>{item.tempo_estimado}</Td>
                         <Td alignCenter width="5%">
-                            <FaCheck onClick={() => handleConcluir(item.id)} />
+                            <FaRegCheckSquare onClick={() => handleConcluir(item.id)} />
                         </Td>
                         <Td alignCenter width="5%">
-                          <FaEdit onClick={() => setOnEdit(item)} />
+                          <FiEdit onClick={() => setOnEdit(item)} />
                         </Td>
                         <Td alignCenter width="5%">
-                            <FaTrash onClick={() => handleDelete(item.id)} />
+                            <FaTrashAlt onClick={() => handleDelete(item.id)} />
                         </Td>
                     </Tr>
                 ))}
