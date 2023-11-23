@@ -47,15 +47,60 @@ export const Td = styled.td`
     };
 `;
 
+export const TdPlay = styled.td`
+    padding-top: 15px;
+    text-align: ${(props) => (props.alignCenter ? "center" : "start")};
+    width: ${(props) => (props.width ? props.width: "auto")};
+    cursor: pointer;
+
+    @media (max-width: 500px) {
+        ${(props) => props.onlyweb && "display: none"}
+    };
+`;
+
+export const TdCheck = styled.td`
+    padding-top: 15px;
+    text-align: ${(props) => (props.alignCenter ? "center" : "start")};
+    width: ${(props) => (props.width ? props.width: "auto")};
+    cursor: pointer;
+
+    @media (max-width: 500px) {
+        ${(props) => props.onlyweb && "display: none"}
+    };
+`;
+
+export const TdEdit = styled.td`
+    padding-top: 15px;
+    text-align: ${(props) => (props.alignCenter ? "center" : "start")};
+    width: ${(props) => (props.width ? props.width: "auto")};
+    cursor: pointer;
+
+    @media (max-width: 500px) {
+        ${(props) => props.onlyweb && "display: none"}
+    };
+`;
+
+export const TdTrash = styled.td`
+    padding-top: 15px;
+    text-align: ${(props) => (props.alignCenter ? "center" : "start")};
+    width: ${(props) => (props.width ? props.width: "auto")};
+    cursor: pointer;
+
+    @media (max-width: 500px) {
+        ${(props) => props.onlyweb && "display: none"}
+    };
+`;
+
+
 const StatusButton = styled.button`
   position: relative;
-  padding: 5px 10px;
+  padding: 5px 17px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
 
   &::before {
     content: "";
+    padding: 1px;
     position: absolute;
     top: 50%;
     left: 0;
@@ -151,24 +196,24 @@ const Grid = ({ tarefas, setTarefas, setOnEdit  }) => {
             <Tbody>
                 {tarefas.map((item, i) => (
                     <Tr key={i}>
-                        <Td alignCenter width="5%">
+                        <TdPlay alignCenter width="5%">
                             <FaRegCirclePlay  onClick={() => handleIniciar(item.id)} />
-                        </Td>
+                        </TdPlay>
                         <Td width='20%'>{item.titulo}</Td>
                         <Td width='20%'>{item.descricao}</Td>
                         <Td width="20%">
                             <StatusButton status={item.status}>{item.status}</StatusButton>
                         </Td>
                         <Td width='20%'>{item.tempo_estimado}</Td>
-                        <Td alignCenter width="5%">
+                        <TdCheck alignCenter width="5%">
                             <FaRegCheckSquare onClick={() => handleConcluir(item.id)} />
-                        </Td>
-                        <Td alignCenter width="5%">
+                        </TdCheck>
+                        <TdEdit alignCenter width="5%">
                           <FiEdit onClick={() => setOnEdit(item)} />
-                        </Td>
-                        <Td alignCenter width="5%">
+                        </TdEdit>
+                        <TdTrash alignCenter width="5%">
                             <FaTrashAlt onClick={() => handleDelete(item.id)} />
-                        </Td>
+                        </TdTrash>
                     </Tr>
                 ))}
             </Tbody>
